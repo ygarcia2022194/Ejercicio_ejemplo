@@ -1,0 +1,32 @@
+<div>
+  <!-- Contenedor de barra de búsqueda -->
+  <div class="search-container">
+    <mat-form-field>
+      <input matInput placeholder="Buscar productos" [(ngModel)]="query" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="buscarProductos()">Buscar</button>
+  </div>
+
+  <!-- Spinner de carga -->
+  <div *ngIf="loading" class="spinner">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+
+  <!-- Mostrar productos o mensaje si no hay resultados -->
+  <div *ngIf="productos && productos.length > 0; else noProductos" class="product-grid">
+    <mat-card *ngFor="let producto of productos" class="product-card">
+      <img mat-card-image [src]="producto.image" alt="{{ producto.name }}" />
+      <mat-card-content>
+        <h3>{{ producto.name }}</h3>
+        <p>{{ producto.price | currency }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Plantilla alternativa para cuando no hay productos -->
+  <ng-template #noProductos>
+    <div class="no-products">
+      No se encontraron productos.
+    </div>
+  </ng-template>
+</div>
